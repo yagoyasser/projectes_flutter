@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = pagGeneracioParaules();
         break;
       case 1:
-        page = Placeholder();
+        page = PagParaulesFavorites(); // !!!
         break;
       default:
         throw UnimplementedError('No hi ha cap index per a $indexSeleccionat');
@@ -78,11 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   destinations: [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),
-                      label: Text('Home'),
+                      label: Text('Inici'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.favorite),
-                      label: Text('Favorites'),
+                      label: Text('Favorits'),
                     ),
                   ],
                   selectedIndex: indexSeleccionat,
@@ -179,6 +179,34 @@ class Paraula extends StatelessWidget {
           semanticsLabel: "${paraulaActual.first} ${paraulaActual.second}",
         ),
       ),
+    );
+  }
+}
+
+class PagParaulesFavorites extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    if (appState.favorites.isEmpty) {
+      return Center(
+        child: Text('No hi ha cap paraula marcada com a "M\'agrada"'),
+      );
+    }
+
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text('Hi ha '
+              '${appState.favorites.length} paraules marcades amb "M\'agrada":'),
+        ),
+        for (var pair in appState.favorites)
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(pair.asLowerCase),
+          ),
+      ],
     );
   }
 }
