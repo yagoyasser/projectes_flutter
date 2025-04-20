@@ -76,10 +76,13 @@ class Paraula extends StatelessWidget {
     );
 
     return Card(
-      color: tema.colorScheme.primary, // El color està indicat a la classe MyApp ... colorScheme
+      color: tema.colorScheme.primary, // El color* està indicat a la classe MyApp ... colorScheme
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(paraulaActual.asLowerCase, style: estil),
+        child: Text(
+          paraulaActual.asLowerCase,
+          style: estil,
+          semanticsLabel: "${paraulaActual.first} ${paraulaActual.second}",),
       ),
     );
   }
