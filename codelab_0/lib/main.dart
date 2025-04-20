@@ -48,6 +48,43 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorites'),
+                ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) {
+                print('selected: $value');
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: pagGeneracioParaules(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class pagGeneracioParaules extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var paraulaActual = appState.paraulaAleatoria;
 
@@ -58,37 +95,34 @@ class MyHomePage extends StatelessWidget {
       icona = Icons.favorite_border;
     }
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Una paraula aleatòria en anglés:'),
-            Paraula(paraulaActual: paraulaActual),
-        
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                 ElevatedButton.icon(
-                  onPressed: () {
-                    appState.toggleFavorite();
-                  },
-                  icon: Icon(icona),
-                  label: Text('M\'agrada'),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    print('Botó premut!'); // Es mostra al terminal
-                    appState.getNext();
-                  },
-                  child: Text('Següent'),
-                ),
-              ],
-            ),
-        
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Text('Una paraula aleatòria en anglés:'),
+          Paraula(paraulaActual: paraulaActual),
+          SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icona),
+                label: Text('M\'agrada'),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // print('Botó premut!'); // Es mostra al terminal
+                  appState.getNext();
+                },
+                child: Text('Següent'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -110,13 +144,15 @@ class Paraula extends StatelessWidget {
     );
 
     return Card(
-      color: tema.colorScheme.primary, // El color* està indicat a la classe MyApp ... colorScheme
+      color: tema.colorScheme
+          .primary, // El color* està indicat a la classe MyApp ... colorScheme
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Text(
           paraulaActual.asLowerCase,
           style: estil,
-          semanticsLabel: "${paraulaActual.first} ${paraulaActual.second}",),
+          semanticsLabel: "${paraulaActual.first} ${paraulaActual.second}",
+        ),
       ),
     );
   }
