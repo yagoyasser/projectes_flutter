@@ -44,7 +44,7 @@ class MyHomePage extends StatelessWidget {
       body: Column(
         children: [
           Text('Una paraula aleatòria en anglés:'),
-          Text(paraulaActual.asLowerCase),
+          Paraula(paraulaActual: paraulaActual),
 
           ElevatedButton(
             onPressed: () {
@@ -55,6 +55,31 @@ class MyHomePage extends StatelessWidget {
           ),
 
         ],
+      ),
+    );
+  }
+}
+
+class Paraula extends StatelessWidget {
+  const Paraula({
+    super.key,
+    required this.paraulaActual,
+  });
+
+  final WordPair paraulaActual;
+
+  @override
+  Widget build(BuildContext context) {
+    final tema = Theme.of(context);
+    final estil = tema.textTheme.displayMedium!.copyWith(
+      color: tema.colorScheme.onPrimary,
+    );
+
+    return Card(
+      color: tema.colorScheme.primary, // El color està indicat a la classe MyApp ... colorScheme
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(paraulaActual.asLowerCase, style: estil),
       ),
     );
   }
