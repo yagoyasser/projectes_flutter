@@ -42,6 +42,7 @@ class MyHomePage extends StatelessWidget {
 
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Una paraula aleatòria en anglés:'),
           Paraula(paraulaActual: paraulaActual),
