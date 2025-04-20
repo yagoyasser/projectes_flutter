@@ -38,12 +38,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    var paraulaActual = appState.paraulaActual;
 
     return Scaffold(
       body: Column(
         children: [
           Text('Una paraula aleatòria en anglés:'),
-          Text(appState.paraulaActual.asLowerCase),
+          Text(paraulaActual.asLowerCase),
 
           ElevatedButton(
             onPressed: () {
