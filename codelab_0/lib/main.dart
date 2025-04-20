@@ -55,6 +55,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget page;
+    switch (indexSeleccionat) {
+      case 0:
+        page = pagGeneracioParaules();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('No hi ha cap index per a $indexSeleccionat');
+    }
     return Scaffold(
       body: Row(
         children: [
@@ -82,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
-              child: pagGeneracioParaules(),
+              child: page,
             ),
           ),
         ],
