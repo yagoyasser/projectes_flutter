@@ -26,10 +26,21 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var paraulaActual = WordPair.random();
+  var paraulaAleatoria = WordPair.random();
 
   void getNext() {
-    paraulaActual = WordPair.random();
+    paraulaAleatoria = WordPair.random();
+    notifyListeners();
+  }
+
+  var favorites = <WordPair>[];
+
+  void toggleFavorite() {
+    if (favorites.contains(paraulaAleatoria)) {
+      favorites.remove(paraulaAleatoria);
+    } else {
+      favorites.add(paraulaAleatoria);
+    }
     notifyListeners();
   }
 }
@@ -38,7 +49,14 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    var paraulaActual = appState.paraulaActual;
+    var paraulaActual = appState.paraulaAleatoria;
+
+    IconData icona;
+    if (appState.favorites.contains(paraulaActual)) {
+      icona = Icons.favorite;
+    } else {
+      icona = Icons.favorite_border;
+    }
 
     return Scaffold(
       body: Center(
@@ -48,12 +66,25 @@ class MyHomePage extends StatelessWidget {
             Text('Una paraula aleatòria en anglés:'),
             Paraula(paraulaActual: paraulaActual),
         
-            ElevatedButton(
-              onPressed: () {
-                print('Botó premut!'); // Es mostra al terminal
-                appState.getNext();
-              },
-              child: Text('Següent'),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                 ElevatedButton.icon(
+                  onPressed: () {
+                    appState.toggleFavorite();
+                  },
+                  icon: Icon(icona),
+                  label: Text('M\'agrada'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    print('Botó premut!'); // Es mostra al terminal
+                    appState.getNext();
+                  },
+                  child: Text('Següent'),
+                ),
+              ],
             ),
         
           ],
