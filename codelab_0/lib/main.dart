@@ -41,21 +41,23 @@ class MyHomePage extends StatelessWidget {
     var paraulaActual = appState.paraulaActual;
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Una paraula aleatòria en anglés:'),
-          Paraula(paraulaActual: paraulaActual),
-
-          ElevatedButton(
-            onPressed: () {
-              print('Botó premut!'); // Es mostra al terminal
-              appState.getNext();
-            },
-            child: Text('Següent'),
-          ),
-
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Una paraula aleatòria en anglés:'),
+            Paraula(paraulaActual: paraulaActual),
+        
+            ElevatedButton(
+              onPressed: () {
+                print('Botó premut!'); // Es mostra al terminal
+                appState.getNext();
+              },
+              child: Text('Següent'),
+            ),
+        
+          ],
+        ),
       ),
     );
   }
